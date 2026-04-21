@@ -369,9 +369,12 @@ class AlarmdecoderPlatform {
 
     async setSwitchState(state, switchType, callback) {
         debug('setting switch '+switchType+' to '+state);
-        if (!state) //switch is turnning off so disarm
-            await this.setAlarmtoState(Characteristic.SecuritySystemTargetState.DISARM, callback);
-        else {
+        if (!state) {
+            if (switchType == 'chime' || switchType == 'clear')
+                callback(null, false); // momentary switches — turning off does nothing
+            else
+                await this.setAlarmtoState(Characteristic.SecuritySystemTargetState.DISARM, callback);
+        } else {
             if (switchType == 'panic')
                 this.setAlarmtoState(4, callback);
             else if (switchType == 'away')
@@ -382,8 +385,14 @@ class AlarmdecoderPlatform {
                 this.setAlarmtoState(Characteristic.SecuritySystemTargetState.STAY_ARM, callback);
             else if (switchType == 'chime')
                 this.setAlarmtoState('chime',callback);
-            else if (switchType == 'clear')
+            else if (switchType == 'clear') {
                 this.setAlarmtoState('clear',callback);
+                setTimeout(() => {
+                    let clearSwitch = this.switchAccessories.find(s => s.displayName == 'clear');
+                    if (clearSwitch)
+                        clearSwitch.getService(Service.Switch).updateCharacteristic(Characteristic.On, false);
+                }, 1000);
+            }
             else
                 callback('invalid switch type',null);
         }
