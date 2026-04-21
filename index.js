@@ -18,6 +18,7 @@ class AlarmdecoderPlatform {
         this.switchAccessories = []; //used to hold the state dummy switches
         this.alarmSystem = null; // set of the right class during initPlatform
         this.createSwitch = config.useSwitches;
+        this.enableNightMode = config.enableNightMode !== undefined ? config.enableNightMode : true;
         this.zoneAccessories = [];  // holds accessories pulled from cache before attachment
         config.DSCorHoneywell ? this.platformType = config.DSCorHoneywell : this.platformType = config.platformType;  // back compatibility
         
@@ -107,7 +108,7 @@ class AlarmdecoderPlatform {
                 .on('get', (callback)=>this.getAlarmState(callback));
             accessory.getService(Service.SecuritySystem)
                 .getCharacteristic(Characteristic.SecuritySystemTargetState)
-                .setProps({ validValues: [0, 1, 3] })
+                .setProps({ validValues: this.enableNightMode ? [0, 1, 2, 3] : [0, 1, 3] })
                 .on('get', (callback)=>this.getAlarmState(callback))
                 .on('set', (state,callback)=>{
                     this.setAlarmtoState(state,callback);

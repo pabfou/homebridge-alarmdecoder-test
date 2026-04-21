@@ -1,5 +1,5 @@
 {
-  "name": "homebridge-alarmdecoder-platform",
+  "name": "homebridge-alarmdecoder-platform-fork-try",
   "version": "3.1.10",
   "description": "An http-based contact and motion sensor plugin for homebridge: https://github.com/nfarina/homebridge, for use with alarmdecoder. Exposes honeywell/dsc alarm system, motion and contact sensors when used with alarmdecoder or caddx/networX/GE/Interlogix when used whith an NX584.",
   "license": "Apache-2.0",
@@ -24,7 +24,7 @@
   "author": "Shaun Baker",
   "repository": {
     "type": "git",
-    "url": "https://github.com/aficustree/homebridge-alarmdecoder-platform.git"
+    "url": "https://github.com/pabfou/homebridge-alarmdecoder-platform.git"
   },
   "dependencies": {
     "axios": "^0.21.1",
