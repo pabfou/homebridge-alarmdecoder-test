@@ -14,6 +14,7 @@ class HoneywellDSC extends alarms.AlarmBase {
         this.setPIN = config.setPIN;
         this.panicKey = config.panicKey;
         this.chimeKey = config.chimeKey;
+        this.offKey = config.offKey || '1';
         let rePlatformType = new RegExp('dsc','i');
         if(rePlatformType.exec(this.platformType)) {
             this.isDSC = true;
@@ -118,6 +119,10 @@ class HoneywellDSC extends alarms.AlarmBase {
             break;
         case 'chime':
             codeToSend= this.setPIN+this.chimeKey;
+            state=true;
+            break;
+        case 'clear':
+            codeToSend= this.setPIN+this.offKey+this.setPIN+this.offKey;
             state=true;
             break;
         }

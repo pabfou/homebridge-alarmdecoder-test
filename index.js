@@ -107,6 +107,7 @@ class AlarmdecoderPlatform {
                 .on('get', (callback)=>this.getAlarmState(callback));
             accessory.getService(Service.SecuritySystem)
                 .getCharacteristic(Characteristic.SecuritySystemTargetState)
+                .setProps({ validValues: [0, 1, 3] })
                 .on('get', (callback)=>this.getAlarmState(callback))
                 .on('set', (state,callback)=>{
                     this.setAlarmtoState(state,callback);
@@ -380,7 +381,9 @@ class AlarmdecoderPlatform {
                 this.setAlarmtoState(Characteristic.SecuritySystemTargetState.STAY_ARM, callback);
             else if (switchType == 'chime')
                 this.setAlarmtoState('chime',callback);
-            else   
+            else if (switchType == 'clear')
+                this.setAlarmtoState('clear',callback);
+            else
                 callback('invalid switch type',null);
         }
     }
