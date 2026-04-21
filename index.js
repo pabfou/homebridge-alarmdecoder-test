@@ -105,6 +105,7 @@ class AlarmdecoderPlatform {
         else if(accessory.getService(Service.SecuritySystem)) {
             accessory.getService(Service.SecuritySystem)
                 .getCharacteristic(Characteristic.SecuritySystemCurrentState)
+                .setProps({ validValues: this.enableNightMode ? [0, 1, 2, 3, 4] : [0, 1, 3, 4] })
                 .on('get', (callback)=>this.getAlarmState(callback));
             accessory.getService(Service.SecuritySystem)
                 .getCharacteristic(Characteristic.SecuritySystemTargetState)
