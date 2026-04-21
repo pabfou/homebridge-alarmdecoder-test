@@ -138,7 +138,7 @@ class AlarmdecoderPlatform {
 
         if (publish) {
             this.log('publishing platform accessory '+accessory.displayName);
-            this.api.registerPlatformAccessories('homebridge-alarmdecoder-platform', 'alarmdecoder-platform', [accessory]);
+            this.api.registerPlatformAccessories('homebridge-alarmdecoder-platform-fork-try', 'alarmdecoder-platform-fork-try', [accessory]);
         }
         return accessory;
     }
